@@ -41,4 +41,16 @@ public class ClientService {
         Client saved = clientRepository.save(client.toEntity());
         return new ClientDTO(saved);
     }
+
+    @Transactional
+    public ClientDTO updateById(Long id, ClientDTO client) {
+        try {
+            Client result = clientRepository.getReferenceById(id);
+            result = clientRepository.save(client.copy(result));
+            return new ClientDTO(result);
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Cliente inexistente");
+        }
+    }
 }
