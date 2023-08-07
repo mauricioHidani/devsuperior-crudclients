@@ -53,4 +53,12 @@ public class ClientService {
             throw new ResourceNotFoundException("Cliente inexistente");
         }
     }
+
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void deleteById(Long id) {
+        if (!clientRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Cliente inexistente");
+        }
+        clientRepository.deleteById(id);
+    }
 }
