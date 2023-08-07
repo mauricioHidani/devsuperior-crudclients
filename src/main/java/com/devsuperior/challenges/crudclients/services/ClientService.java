@@ -23,4 +23,16 @@ public class ClientService {
                 .orElseThrow(() -> new ResourceNotFoundException("Cliente inexistente"));
         return new ClientDTO(result);
     }
+
+    @Transactional(readOnly = true)
+    public Page<ClientDTO> findAll(Pageable pageable) {
+        Page<ClientDTO> result = clientRepository
+                .findAll(pageable)
+                .map(ClientDTO::new);
+
+        if (result.isEmpty()) {
+            throw new ResourceNotFoundException("Clientes inexistentes");
+        }
+        return result;
+    }
 }
