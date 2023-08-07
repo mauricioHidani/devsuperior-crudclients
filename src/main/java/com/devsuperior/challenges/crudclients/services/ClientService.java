@@ -35,4 +35,10 @@ public class ClientService {
         }
         return result;
     }
+
+    @Transactional
+    public ClientDTO insert(ClientDTO client) {
+        Client saved = clientRepository.save(client.toEntity());
+        return new ClientDTO(saved);
+    }
 }
